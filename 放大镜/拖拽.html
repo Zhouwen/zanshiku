@@ -1,0 +1,77 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset='utf-8' />
+	<style>
+		*{
+			margin:0;
+		}
+		.all{
+			width:277px;
+			height:369px;
+			border:1px solid orange;
+			position:relative;
+			top:0;
+			left:0;
+			z-index:0;
+		}
+		.all img{
+			position:absolute;
+			top:0;
+			left:0;
+			z-index:1;
+		}
+		.li{
+			width:60px;
+			height:60px;
+			position:absolute;
+			background:red;
+			opacity:0.5;
+			z-index:1;
+		}
+	</style>
+</head>
+<body>
+	<div class="all" id="one">
+		<img src="1.jpg" alt="" id="im1"/>
+		<div class="li" id="two"></div>
+	</div>
+	<script>
+		var one = document.getElementById('one');
+		var two = document.getElementById('two');
+		two.onmousedown = function (event) {
+			var event = event || window.event;
+			var mx = event.clientX;
+			var my = event.clientY;
+			var ml = mx - one.offsetLeft - two.offsetWidth/2;
+			var mt = my - one.offsetTop - two.offsetHeight/2;	
+			one.onmousemove = function (event) {
+				var event = event || window.event;
+				var nx = event.clientX;
+				var ny = event.clientY;
+				var nl = nx - mx + ml;
+				var nt = ny - my + mt;
+				if(nl>=one.clientWidth-two.offsetWidth){
+					nl=one.clientWidth-two.offsetWidth;
+				}
+				if(nl<=0){
+					nl=0;	
+				}
+				if(nt>=one.clientHeight-two.offsetHeight){
+					nt=one.clientHeight-two.offsetHeight;
+				}
+				if(nt<=0){
+					nt=0;
+				}
+				two.style.left=nl+'px';
+				two.style.top=nt+'px';	
+			}
+		}
+		one.onmouseup = function () {
+			one.onmousemove = null; 
+		}
+	</script> 
+</body>
+</html>
+

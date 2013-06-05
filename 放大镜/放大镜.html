@@ -1,0 +1,96 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset='utf-8' />
+	<style>
+		*{
+			margin:0;
+		}
+		.all{
+			width:277px;
+			height:369px;
+			border:1px solid orange;
+			position:relative;
+			top:0;
+			left:0;
+			z-index:0;
+		}
+		.all img{
+			position:absolute;
+			top:0;
+			left:0;
+			z-index:1;
+		}
+		.li{
+			width:200px;
+			height:250px;
+			position:absolute;
+			background:white;
+			opacity:0.5;
+			z-index:1;
+			display:none;
+		}
+		.con{
+			width:400px;
+			height:500px;
+			float:right;
+			overflow:hidden;
+			margin-top:-300px;
+			margin-right:300px;
+			display:none;
+		}
+	</style>
+</head>
+<body>
+	<div class="all" id="one">
+		<img src="1.jpg" alt="" id="im1"/>
+		<div class="li" id="two"></div>
+	</div>
+	<div class="con" id="three">
+		<img src="2.jpg" alt="" id="im2"/>
+	</div>
+	<script>
+		var one = document.getElementById('one');
+		var two = document.getElementById('two');
+		var three = document.getElementById('three');
+		var im1 = document.getElementById('im1');
+		var im2 = document.getElementById('im2');
+		one.onmousemove = function (event) {
+			var event = event || window.event;
+			two.style.display = "block";
+			three.style.display = "block";
+			//鼠标距窗口的距离
+			var mx = event.clientX;
+			var my = event.clientY;
+			//鼠标距大div的距离
+			var ml=mx - one.offsetLeft - two.offsetWidth/2;
+			var mt=my - one.offsetTop - two.offsetHeight/2;
+			//
+			var nx = (im2.clientWidth/im1.offsetWidth)*ml;
+			var ny = (im2.clientWidth/im1.offsetWidth)*mt;
+			//
+			if(ml>one.clientWidth-two.offsetWidth){
+				ml=one.clientWidth-two.offsetWidth;
+			}
+			if(ml<0){
+				ml=0;	
+			}
+			if(mt>=one.clientHeight-two.offsetHeight){
+				mt=one.clientHeight-two.offsetHeight;
+			}
+			if(mt<0){
+				mt=0;
+			}
+			two.style.left=ml+'px';
+			two.style.top=mt+'px';
+			three.scrollLeft=nx;
+			three.scrollTop=ny;
+		}
+		one.onmouseout = function (event) {
+			two.style.display = "none";
+			three.style.display = "none";
+		}
+	</script> 
+</body>
+</html>
